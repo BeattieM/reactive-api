@@ -3,8 +3,7 @@ class V1::PostsController < ApplicationController
   before_action :doorkeeper_authorize!, except: [:index]
 
   def index
-    @posts = Post.all.order(id: :desc)
-    @post = Post.new
+    render json: Post.all.order(id: :desc), each_serializer: V1::Posts::PostSerializer
   end
 
   def create
