@@ -1,6 +1,6 @@
 # Controller for Post specific endpoints
 class V1::PostsController < ApplicationController
-  before_action :doorkeeper_authorize!, except: [:index]
+  before_action :authenticate_api_user, except: [:index]
 
   def index
     render json: Post.all.order(id: :desc), each_serializer: V1::Posts::PostSerializer
@@ -41,11 +41,9 @@ class V1::PostsController < ApplicationController
     params.require(:post).permit(:comment)
   end
 
-  def broadcast(post, type)
+  def broadcast(post, action)
     ActionCable.server.broadcast 'posts',
-                                 count: Post.count,
-                                 post: post,
-                                 sprite: post.sprite,
-                                 type: type
+                                 data: ActiveModelSerializers::Adapter.create(V1::Posts::PostSerializer.new(post)).as_json[:data],
+                                 action: action
   end
 end

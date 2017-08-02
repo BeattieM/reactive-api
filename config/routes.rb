@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+  
   scope :v1 do
     use_doorkeeper do
       skip_controllers :authorizations, :applications, :authorized_applications
