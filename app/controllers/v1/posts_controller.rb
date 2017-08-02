@@ -53,7 +53,7 @@ class V1::PostsController < ApplicationController
 
   def broadcast(post, action)
     ActionCable.server.broadcast 'posts',
-                                 data: format_for_action_cable(post),
+                                 data: [format_for_action_cable(post)],
                                  action: action
   end
 
