@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+system 'echo "Rails Best Practices" && rails_best_practices'
+system 'echo "RuboCop" && rubocop -c ./config/linters/rubocop.yml'
+system 'echo "Reek" && reek -c ./config/linters/reek.yml' 
+system 'echo "Flog" && flog app'
+system 'echo "Flay" && flay app'
+system 'echo "Brakeman" && brakeman -q'

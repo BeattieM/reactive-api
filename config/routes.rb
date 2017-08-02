@@ -1,3 +1,21 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
+  scope :v1 do
+    use_doorkeeper do
+      skip_controllers :authorizations, :applications, :authorized_applications
+    end
+  end
+
+  namespace :v1 do
+    resources :posts, only: %i[index create update destroy]
+
+    resources :users, only: [:create] do
+      collection do
+        post 'sign_in', to: 'users#sign_in'
+        post 'sign_out', to: 'users#sign_out'
+      end
+    end
+  end
 end
