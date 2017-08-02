@@ -7,7 +7,7 @@ class V1::PostsController < ApplicationController
   end
 
   def create
-    post = Post.new(comment: post_params[:comment], user: current_user, pokemon: PokemonService.search_for_pokemon)
+    post = Post.new(comment: post_params[:comment], user: current_user, pokemon: retrieve_pokemon)
     return unless post.save
     broadcast(post, 'create')
     head :ok
@@ -41,9 +41,17 @@ class V1::PostsController < ApplicationController
     params.require(:post).permit(:comment)
   end
 
+  def retrieve_pokemon
+    PokemonService.search_for_pokemon
+  end
+
   def broadcast(post, action)
     ActionCable.server.broadcast 'posts',
-                                 data: ActiveModelSerializers::Adapter.create(V1::Posts::PostSerializer.new(post)).as_json[:data],
+                                 data: format_for_action_cable(post),
                                  action: action
+  end
+
+  def format_for_action_cable(post)
+    ActiveModelSerializers::Adapter.create(V1::Posts::PostSerializer.new(post)).as_json[:data]
   end
 end

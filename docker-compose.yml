@@ -13,3 +13,8 @@ services:
     depends_on:
       - db
     container_name: web-server
+  lint:
+    build: .
+    volumes:
+      - .:/reactive
+    container_name: web-server-lint

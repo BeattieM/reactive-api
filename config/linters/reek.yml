@@ -1,0 +1,12 @@
+# TooManyInstanceVariables:
+#   enabled: false
+#   exclude: []
+#   max_instance_variables: 9
+# TooManyMethods:
+#   enabled: false
+#   exclude: []
+#   max_methods: 25
+# TooManyStatements:
+#   enabled: true
+#   max_statements: 7
+#   exclude: ["DeviseCreateUsers#change"]

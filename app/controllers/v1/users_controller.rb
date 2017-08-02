@@ -1,3 +1,4 @@
+# Controller for User specific endpoints
 class V1::UsersController < ApplicationController
   include AuthConcerns
 

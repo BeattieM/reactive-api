@@ -1,0 +1,38 @@
+AllCops:
+  Exclude:
+    - 'db/*.rb'
+    - 'db/*/*.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'lint'
+    - 'Gemfile'
+
+EmptyLinesAroundModuleBody:
+  Enabled: false
+
+EmptyLinesAroundClassBody:
+  Enabled: false
+
+LineLength:
+  Max: 110
+  Exclude:
+    - 'spec/*/*.rb'
+
+# ClassLength:
+#   Enabled: true
+#   CountComments: false
+#   Max: 150
+
+MethodLength:
+  Max: 10
+
+BlockLength:
+  Max: 5
+  Exclude:
+    - 'spec/*/*.rb'
+    - 'bin/*'
+    - 'config/routes.rb'
+    - 'config/*/*.rb'
+
+ClassAndModuleChildren:
+  Enabled: false

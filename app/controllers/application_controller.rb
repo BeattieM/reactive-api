@@ -1,7 +1,7 @@
 # Base controller for all API endpoints
 class ApplicationController < ActionController::API
   include ActionController::Serialization
-  
+
   attr_reader :current_user
 
   def authenticate_api_user
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
 
   def find_user_by_doorkeeper_token(token)
     if (token.expired? || token.revoked?) && @logout != true
-      return render_expired_token
+      render_expired_token
     else
       @current_user = User.find_by(id: token.resource_owner_id)
     end

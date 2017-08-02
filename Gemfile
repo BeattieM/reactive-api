@@ -50,6 +50,7 @@ group :development, :test do
   gem 'rails_best_practices', '~> 1.18.0'
   gem 'reek', '~> 4.6.1'
   gem 'rubocop', '~> 0.48.1'
+  gem 'brakeman', '~> 3.7.0'
 
   # Testing
   gem 'rspec-rails'

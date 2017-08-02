@@ -18,7 +18,8 @@ module PokemonService
     #
     # @return [Hash] containing the random Pokemon detail endpoint
     def random_pokemon
-      HTTParty.get("http://pokeapi.co/api/v2/pokemon/?offset=#{random_offset}&limit=1").parsed_response['results'].first
+      url = "http://pokeapi.co/api/v2/pokemon/?offset=#{random_offset}&limit=1"
+      HTTParty.get(url).parsed_response['results'].first
     end
 
     # Query the Pokemon API for details on a specific Pokemon
