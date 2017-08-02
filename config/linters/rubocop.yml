@@ -18,11 +18,6 @@ LineLength:
   Exclude:
     - 'spec/*/*.rb'
 
-# ClassLength:
-#   Enabled: true
-#   CountComments: false
-#   Max: 150
-
 MethodLength:
   Max: 10
 

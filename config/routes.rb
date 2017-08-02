@@ -14,12 +14,8 @@ Rails.application.routes.draw do
     resources :users, only: [:create] do
       collection do
         post 'sign_in', to: 'users#sign_in'
+        post 'sign_out', to: 'users#sign_out'
       end
-    end
-
-    scope 'user', as: :current_user do
-      get '/', to: 'users#show'
-      post 'sign_out', to: 'users#sign_out'
     end
   end
 end

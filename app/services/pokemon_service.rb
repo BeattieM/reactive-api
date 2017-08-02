@@ -8,7 +8,7 @@ module PokemonService
     def search_for_pokemon
       random = random_pokemon
       @pokemon = Pokemon.find_by_name(random['name'])
-      attempt_catch_pokemon(random['url']) if @pokemon.nil?
+      attempt_catch_pokemon(random['url']) unless @pokemon
       @pokemon
     end
 
@@ -29,7 +29,7 @@ module PokemonService
     # @return [Hash] containing the pokedex details of a Pokemon
     def attempt_catch_pokemon(url)
       pokedex_entry = HTTParty.get(url).parsed_response
-      pokedex_entry['sprites']['front_default'].nil? ? search_for_pokemon : store_pokemon(pokedex_entry)
+      pokedex_entry['sprites']['front_default'] ? store_pokemon(pokedex_entry) : search_for_pokemon
     end
 
     # Save a Pokemon to the database

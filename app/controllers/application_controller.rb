@@ -18,7 +18,7 @@ class ApplicationController < ActionController::API
   end
 
   def render_model_errors(errors_from_model, status)
-    @errors = errors_from_model.map { |k, v| OpenStruct.new(field: k.to_s, message: v) }
+    @errors = errors_from_model.map { |k, v| OpenStruct.new(title: k.to_s, detail: v) }
     render_errors(status)
   end
 
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::API
   end
 
   def render_field_error(fld, msg, status)
-    @errors = [OpenStruct.new(field: fld, message: msg)]
+    @errors = [OpenStruct.new(title: fld, detail: msg)]
     render_errors(status)
   end
 
@@ -42,6 +42,6 @@ class ApplicationController < ActionController::API
   end
 
   def render_errors(status = :unauthorized)
-    render json: { errors: @errors.map { |e| { field: e.field, message: e.message } } }, status: status
+    render json: { errors: @errors.map { |e| { title: e.title, detail: e.detail } } }, status: status
   end
 end

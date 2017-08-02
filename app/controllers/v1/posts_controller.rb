@@ -8,31 +8,25 @@ class V1::PostsController < ApplicationController
 
   def create
     post = Post.new(comment: post_params[:comment], user: current_user, pokemon: retrieve_pokemon)
-    return unless post.save
+    return render_model_errors(post.errors, :unprocessable_entity) unless post.save
     broadcast(post, 'create')
     head :ok
   end
 
   def update
     post = current_user.posts.find_by_uuid(params[:id])
-    if post
-      post.update_attributes(post_params)
-      broadcast(post, 'update')
-      head :ok
-    else
-      head 404
-    end
+    return render_item_not_found('Post') unless post
+    post.update_attributes(post_params)
+    broadcast(post, 'update')
+    head :ok
   end
 
   def destroy
     post = current_user.posts.find_by_uuid(params[:id])
-    if post
-      post.destroy
-      broadcast(post, 'delete')
-      head :ok
-    else
-      head 404
-    end
+    return render_item_not_found('Post') unless post
+    post.destroy
+    broadcast(post, 'delete')
+    head :ok
   end
 
   private

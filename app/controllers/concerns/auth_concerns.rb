@@ -30,8 +30,11 @@ module AuthConcerns
 
   def slice_token(doorkeeper_token)
     {
-      access_token: doorkeeper_token.slice(:token)[:token],
-      refresh_token: doorkeeper_token.slice(:refresh_token)[:refresh_token]
+      data: {
+        access_token: doorkeeper_token.slice(:token)[:token],
+        refresh_token: doorkeeper_token.slice(:refresh_token)[:refresh_token],
+        user_id: current_user.id
+      }
     }
   end
 end
