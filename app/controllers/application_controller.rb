@@ -4,11 +4,13 @@ class ApplicationController < ActionController::API
 
   attr_reader :current_user
 
+  # Check for valid Doorkeeper Token or return custom error response
   def authenticate_api_user
     find_user_by_doorkeeper_token(doorkeeper_token) if doorkeeper_token
     render_invalid_auth unless @current_user
   end
 
+  # Ignore Doorkeeper Token validity when attempting to logout
   def find_user_by_doorkeeper_token(token)
     if (token.expired? || token.revoked?) && @logout != true
       render_expired_token
@@ -26,12 +28,12 @@ class ApplicationController < ActionController::API
     render_field_error(item, 'not found', :not_found)
   end
 
+  private
+
   def render_field_error(fld, msg, status)
     @errors = [OpenStruct.new(title: fld, detail: msg)]
     render_errors(status)
   end
-
-  private
 
   def render_expired_token
     render_field_error('Token', 'has expired', :unauthorized)

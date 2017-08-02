@@ -12,17 +12,17 @@ class V1::UsersController < ApplicationController
     render json: slice_token(create_doorkeeper_access_token), status: :created
   end
 
-  # POST /users/login
+  # POST /users/sign_in
   #
   # Returns or generates a new Doorkeeper Access Token
   def sign_in
     user = User.where(email: params[:email]).first
     return render_invalid_auth unless user && user.valid_password?(params[:password])
     @current_user = user
-    render json: slice_token(active_token), status: :ok
+    render json: slice_token(valid_token), status: :ok
   end
 
-  # POST /user/logout
+  # POST /users/sign_out
   #
   # Revokes the current user's Doorkeeper Access Token
   def sign_out
@@ -41,7 +41,8 @@ class V1::UsersController < ApplicationController
     user_params
   end
 
-  def active_token
+  # Find or generate a new valid Doorkeeper Access Token
+  def valid_token
     access_token = find_or_create_doorkeeper_access_token
     create_doorkeeper_access_token if access_token.expired? || access_token.revoked?
     access_token
