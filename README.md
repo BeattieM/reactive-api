@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/BeattieM/reactive-api.svg?branch=master)](https://travis-ci.org/BeattieM/reactive-api)
+[![Coverage Status](https://img.shields.io/codeclimate/coverage/github/BeattieM/reactive-api.svg)](https://codeclimate.com/github/BeattieM/reactive-api)
+[![Code Climate](https://codeclimate.com/github/BeattieM/reactive-api.svg)](https://codeclimate.com/github/BeattieM/reactive-api)
+
 # Reactive API
 API to support https://github.com/BeattieM/reactiverails-docker-demo
 
@@ -12,8 +16,8 @@ The first time you clone down and run the project will require a little bit of i
 
 In order to create the development and test database you will need to open a new terminal window and run either:  
 
-- `docker-compose run web rake db:create`  
-- `docker-compose run web rake db:migrate`  
+- `docker-compose run --rm web rake db:create`  
+- `docker-compose run --rm web rake db:migrate`  
 or  
 - `docker exec -it web-server bash`
 - `rake db:create && rake db:migrate`

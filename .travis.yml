@@ -2,13 +2,16 @@ sudo: false
 language: ruby
 rvm:
   - 2.4.1
-before_install: gem install bundler -v 1.15.2
+services:
+  - docker
+before_install:
+  - gem install bundler -v 1.15.2
+  - docker-compose build
+  - docker-compose up -d && docker ps
 script:
-  - bundle exec rake db:drop
-  - bundle exec rake db:create
-  - bundle exec rake db:migrate --trace
-addons:
-  code_climate:
-    repo_token: efde411d2e876ce4fd45042d8e90da55007e1d392b5fcc99d674466130002e3f
+  - docker-compose run --rm web rake db:create
+  - docker-compose run --rm web rake db:migrate
+  - docker-compose run --rm web rspec 
 after_success:
-  - bundle exec codeclimate-test-reporter
+  - docker-compose run --rm -e CODECLIMATE_REPO_TOKEN='efde411d2e876ce4fd45042d8e90da55007e1d392b5fcc99d674466130002e3f' web codeclimate-test-reporter
+  - docker-compose down
