@@ -1,6 +1,5 @@
 sudo: false
 language: ruby
-cache: bundler
 rvm:
   - 2.4.1
 services:
@@ -12,8 +11,8 @@ before_install:
 before_script:
   - sleep 15  # wait for PostgreSQl to start
 script:
-  - docker-compose run --rm web rake db:create`  
-  - docker-compose run --rm web rake db:migrate` 
+  - docker-compose run --rm web rake db:create
+  - docker-compose run --rm web rake db:migrate
   - docker-compose run --rm web rspec
 after_script:
   - docker-compose down
