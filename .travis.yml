@@ -8,18 +8,15 @@ services:
 before_install:
   - gem install bundler -v 1.15.2
   - docker-compose build
-  - docker-compose start
-
-  # You will want this for logging. If one of your containers does not build for
-  # whatever reason it's best to report that now before your tests start
-  # otherwise it can be really tricky to debug why tests are failing sometimes.
-  - docker ps
+  - docker-compose up -d && docker ps
 before_script:
   - sleep 15  # wait for PostgreSQl to start
 script:
   - docker-compose run --rm web rake db:create`  
   - docker-compose run --rm web rake db:migrate` 
   - docker-compose run --rm web rspec
+after_script:
+  - docker-compose down
 addons:
   code_climate:
     repo_token: efde411d2e876ce4fd45042d8e90da55007e1d392b5fcc99d674466130002e3f
