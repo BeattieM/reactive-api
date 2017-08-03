@@ -36,11 +36,7 @@ Call `docker-compose run --rm web rspec` to run the tests and then open up `cove
 Linting of this project is composed of a set of 5 linters run in sequence: Rails Best Practices, RuboCop, Reek, Flog, Flay.  
 To run all of the linters simply call `docker-compose run --rm lint ./lint`
 
-## Bonus feature: WebSockets
-In order to simulate a realistic environment with several users you can open up the project in multiple separate browser windows and see new posts being dynamically added to the view.
-
 ## Future improvements
-- Add infinite scroll
 - Add Pokemon API caching
   - Cache API calls(Varnish)
   - Cache Pokemon images(S3)
