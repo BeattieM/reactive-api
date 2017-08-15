@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
   # Ignore Doorkeeper Token validity when attempting to logout
   def find_user_by_doorkeeper_token(token)
     if (token.expired? || token.revoked?) && @logout != true
-      @bad_token = true;
+      @bad_token = true
       render_expired_token
     else
       @current_user = User.find_by(id: token.resource_owner_id)
