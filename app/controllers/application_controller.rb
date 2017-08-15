@@ -2,17 +2,18 @@
 class ApplicationController < ActionController::API
   include ActionController::Serialization
 
-  attr_reader :current_user
+  attr_reader :current_user, :bad_token
 
   # Check for valid Doorkeeper Token or return custom error response
   def authenticate_api_user
     find_user_by_doorkeeper_token(doorkeeper_token) if doorkeeper_token
-    render_invalid_auth unless @current_user
+    render_invalid_auth unless current_user || bad_token
   end
 
   # Ignore Doorkeeper Token validity when attempting to logout
   def find_user_by_doorkeeper_token(token)
     if (token.expired? || token.revoked?) && @logout != true
+      @bad_token = true;
       render_expired_token
     else
       @current_user = User.find_by(id: token.resource_owner_id)
